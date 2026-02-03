@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Upload, FileText, Mail, Phone, Calendar, Clock, FileCheck, X } from 'lucide-react';
+import { PDFParse } from 'pdf-parse';
+import './App.css';
 
 
 export default function App() {
@@ -50,6 +52,18 @@ export default function App() {
     setFile(null);
     setExtracted(null);
   };
+
+  console.log({ file })
+  const link = 'https://mehmet-kozan.github.io/pdf-parse/pdf/climate.pdf';
+  const parser = new PDFParse({ url: link });
+  useEffect(() => {
+    const fetchInfo = async () => {
+      const result = await parser.getInfo({ parsePageInfo: true });
+      console.log({ result });
+    };
+    fetchInfo();
+  }, []);
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
